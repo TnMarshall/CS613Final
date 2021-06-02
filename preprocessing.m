@@ -10,7 +10,6 @@ data.Properties.VariableNames = varNames;
 
 features = data(:,1:127);
 violentCrimesPerPop = data{:,128};
-
 % Incompletes:
 % 2,3,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,122,123,124,125,127
 % Race Data:
@@ -62,9 +61,15 @@ end
 %% Combine Chosen Features with crime data
 
 
-chosenRecombEx = [chosenFeaturesEx(:,:),data(:,128)];
-chosenRecombInc = [chosenFeaturesInc(:,:),data(:,128)];
+violentCrimeBinned = round(data{:,'ViolentCrimesPerPop'},1)*10;
+violentCrimeBinned = array2table(violentCrimeBinned);
+violentCrimeBinned.Properties.VariableNames = "ViolentCrimesPerPop";
 
+% chosenRecombEx = [chosenFeaturesEx(:,:),data(:,128)];
+% chosenRecombInc = [chosenFeaturesInc(:,:),data(:,128)];
+
+chosenRecombEx = [chosenFeaturesEx(:,:),violentCrimeBinned];
+chosenRecombInc = [chosenFeaturesInc(:,:),violentCrimeBinned];
 
 %% Randomize observation order
 
