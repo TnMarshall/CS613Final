@@ -21,7 +21,7 @@ class Decision_Tree:
     algorithm.
     '''
     
-    def __init__(self, data):
+    def __init__(self, data, depth=None):
         '''
         Initialize all class variables and build the decision tree.
         
@@ -32,7 +32,7 @@ class Decision_Tree:
         self.default = self.find_default(data)
         
         attributes = np.arange(len(data[0, :-1]))
-        self.tree = self.build_tree(data, attributes, self.default)
+        self.tree = self.build_tree(data, attributes, self.default, depth)
         
     
     def find_default(self, data):
@@ -101,7 +101,7 @@ class Decision_Tree:
         return attributes[np.argmin(entropies)]
         
         
-    def build_tree(self, data, attributes, default):
+    def build_tree(self, data, attributes, default, depth):
         '''
         Recursively build the decision tree, each time spliting on the feature
         with the lowest entropy. If there are no reamin attributes to split on
@@ -122,6 +122,10 @@ class Decision_Tree:
             values, counts = np.unique(data[:,-1], return_counts=True)
             node = Node(values[np.argmax(counts)], -1, values[np.argmax(counts)])
             return node
+        elif depth == 0:
+            values, counts = np.unique(data[:,-1], return_counts=True)
+            node = Node(values[np.argmax(counts)], -1, values[np.argmax(counts)])
+            return node
         else:
             values, counts = np.unique(data[:,-1], return_counts=True)
             most_common = values[np.argmax(counts)]
@@ -136,7 +140,9 @@ class Decision_Tree:
                 option_mask = data[:, best_attr] == option
                 sub_data = data[option_mask, :]
                 sub_default = self.find_default(sub_data)
-                sub_node = self.build_tree(sub_data, sub_attr, sub_default)
+                if depth:
+                    depth -= 1
+                sub_node = self.build_tree(sub_data, sub_attr, sub_default, depth)
                 node.children[option] = sub_node
             
             return node
