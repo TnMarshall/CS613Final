@@ -59,7 +59,7 @@ dist = np.ones(split_size)
 dist *= 1/split_size
 
 print(f'Dist: {dist}')
-
+classifiers = []
 
 
 for i in range(10):
@@ -99,3 +99,18 @@ for i in range(10):
         dt_accuracy = sum(correct)/len(train_Y)
         print(f'Decision Tree accuracy: {dt_accuracy}')
         print()
+        
+        classifiers.append((dt, beta))
+        
+        
+        
+for classifier, beta in classifiers:
+    
+    print(classifier)
+    print(beta)
+    
+    train_preds = np.apply_along_axis(dt.predict, axis=1, arr=val_X, tree=dt.tree)
+    val_preds = np.expand_dims(val_preds, axis=1)
+    
+#     correct = val_Y==val_preds 
+    print()
