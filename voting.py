@@ -105,7 +105,7 @@ def voting(filename):
         Ymask = sub_trainY == f
         sub_trainY = Ymask.astype(int)
         sub_trainY = np.expand_dims(sub_trainY, axis=1)
-        w = wc.logistic_regression(sub_trainX, sub_trainY, 1000000, 2**-32, .0001)
+        w = wc.logistic_regression(sub_trainX, sub_trainY, 10000, 2**-32, .0001)
         f_prob = wc.sigmoid(valX, w)
         l_prob = 1 - f_prob
 
@@ -115,7 +115,7 @@ def voting(filename):
     probs = probs/(len(options)-1)
     
     lr_preds = []
-    for row in temp:
+    for row in probs:
         idx = np.argmax(row)
         lr_preds.append(idx)
 
@@ -123,6 +123,7 @@ def voting(filename):
     lr_preds = np.expand_dims(lr_preds, axis=1)
     
     temp_valY = np.expand_dims(valY, axis=1)
+    
     lr_accuracy = sum(temp_valY==lr_preds)/len(temp_valY)
     print(f'Logistic Regression accuracy: {lr_accuracy}')
     
