@@ -98,13 +98,5 @@ randAbsInc = sortedFeaturesIncAbs(randIndsAbsInc,:);
 for N = 1:size(sortedFeaturesExAbs, 2)
 %     size(randAbsEx(:,1:N))
     setExp = randAbsEx(:,1:N);
-    setName = "featureRedProcessed/raceExcludedProcessedFeatures_" + num2str(N) + ".csv";
-    writetable(setExp, setName);
-end
-
-for N = 1:size(sortedFeaturesInc, 2)
-%     size(randAbsEx(:,1:N))
-    setExp = randAbsInc(:,1:N);
-    setName = "featureRedProcessed/raceIncludedProcessedFeatures_" + num2str(N) + ".csv";
-    writetable(setExp, setName);
+    setName = "featureRedProcessed/raceExcludedProcessedFeatures
 end
