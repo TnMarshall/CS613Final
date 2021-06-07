@@ -89,22 +89,26 @@ chosenRecombIncRand = chosenRecombInc(randIndsInc,:);
 %% Export Data of Various Dimensions
 
 % First export all 
-randIndsAbsEx = randperm(size(sortedFeaturesExAbs,1));
-randIndsAbsInc = randperm(size(sortedFeaturesIncAbs,1));
 
-randAbsEx = sortedFeaturesExAbs(randIndsAbsEx,:);
-randAbsInc = sortedFeaturesIncAbs(randIndsAbsInc,:);
+recombAbsEx = [sortedFeaturesExAbs(:,:), violentCrimeBinned];
+recombAbsInc = [sortedFeaturesIncAbs(:,:), violentCrimeBinned];
 
-for N = 1:size(sortedFeaturesExAbs, 2)
+randIndsAbsEx = randperm(size(recombAbsEx,1));
+randIndsAbsInc = randperm(size(recombAbsInc,1));
+
+randAbsEx = recombAbsEx(randIndsAbsEx,:);
+randAbsInc = recombAbsInc(randIndsAbsInc,:);
+
+for N = 1:(size(randAbsEx, 2)-1)
 %     size(randAbsEx(:,1:N))
-    setExp = randAbsEx(:,1:N);
+    setExp = randAbsEx(:,[1:N,end]);
     setName = "featureRedProcessed/raceExcludedProcessedFeatures_" + num2str(N) + ".csv";
     writetable(setExp, setName);
 end
 
-for N = 1:size(sortedFeaturesInc, 2)
+for N = 1:(size(randAbsInc, 2)-1)
 %     size(randAbsEx(:,1:N))
-    setExp = randAbsInc(:,1:N);
+    setExp = randAbsInc(:,[1:N,end]);
     setName = "featureRedProcessed/raceIncludedProcessedFeatures_" + num2str(N) + ".csv";
     writetable(setExp, setName);
 end
