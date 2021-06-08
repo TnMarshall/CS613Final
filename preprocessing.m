@@ -70,7 +70,7 @@ else
     chosenFeaturesInc = sortedFeaturesIncAbs(:,1:N); 
 end
 
-%extract feature names to match with sorted correlations
+%% extract feature names to match with sorted correlations
 ExNames = sortedFeaturesEx.Properties.VariableNames;
 IncNames = sortedFeaturesInc.Properties.VariableNames;
 
@@ -81,6 +81,21 @@ exNamesAndCorr.Properties.VariableNames = ExNames;
 incNamesAndCorr.Properties.VariableNames = IncNames;
 
 %do the same for absolute values
+
+ExNamesAbs = sortedFeaturesExAbs.Properties.VariableNames;
+IncNamesAbs = sortedFeaturesIncAbs.Properties.VariableNames;
+
+exNamesAndCorrAbs = array2table(absSortedCoefEx');
+incNamesAndCorrAbs = array2table(absSortedCoefInc');
+
+exNamesAndCorrAbs.Properties.VariableNames = ExNamesAbs;
+incNamesAndCorrAbs.Properties.VariableNames = IncNamesAbs;
+
+% export
+writetable(rows2vars(exNamesAndCorr), 'exNamesAndCorr.csv');
+writetable(rows2vars(exNamesAndCorrAbs), 'exNamesAndCorrAbs.csv');
+writetable(rows2vars(incNamesAndCorr), 'incNamesAndCorr.csv');
+writetable(rows2vars(incNamesAndCorrAbs), 'incNamesAndCorrAbs.csv');
 
 %% Combine Chosen Features with crime data
 

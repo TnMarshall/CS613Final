@@ -8,8 +8,11 @@ accuraciesEx = readtable('accuraciesRaceDataEx.csv');
 baggingInc = readtable('baggingAccuraciesInc.csv');
 baggingEx = readtable('baggingAccuraciesEx.csv');
 
-fullInc = [accuraciesInc, baggingInc];
-fullEx = [accuraciesEx, baggingEx];
+adaboost1Inc = readtable('adaboostAccuraciesInc.csv');
+adaboost1Ex = readtable('adaboostAccuraciesEx.csv');
 
-writetable(fullInc, 'accuraciesWoBoostInc.csv')
-writetable(fullEx, 'accuraciesWoBoostEx.csv')
+fullInc = [accuraciesInc, baggingInc,adaboost1Inc];
+fullEx = [accuraciesEx, baggingEx, adaboost1Ex];
+
+writetable(fullInc, 'accuraciesFullInc.csv')
+writetable(fullEx, 'accuraciesFullEx.csv')
