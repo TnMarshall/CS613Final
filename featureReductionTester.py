@@ -6,7 +6,7 @@ startEx = time.time()
 
 for i in range(1,92):   #1-91 range doesn't include the last number
     print(i)
-    fileName = "./featureRedProcessed/raceIncludedProcessedFeatures_" + str(i) + ".csv"
+    fileName = "./featureRedProcessed/raceExcludedProcessedFeatures_" + str(i) + ".csv"
     # print(fileName)
     accuraciesRaceEx.append(voting(fileName))
 elapsedEx = time.time() - startEx

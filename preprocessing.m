@@ -33,6 +33,18 @@ corrToViolentEx = corrCoefficientsExcluded(1:end-1,end);
 corrCoefficientsIncluded = corrcoef([dataFilteredRaceIncludedNumeric, violentCrimesPerPop]);
 corrToViolentInc = corrCoefficientsIncluded(1:end-1,end);
 
+for i = 1:size(corrToViolentEx,1)
+    if isnan(corrToViolentEx(i))
+        corrToViolentEx(i) = 0;
+    end
+end
+
+for i = 1:size(corrToViolentInc,1)
+    if isnan(corrToViolentInc(i))
+        corrToViolentInc(i) = 0;
+    end
+end
+
 [sortedCoefEx, indsEx] = sort(corrToViolentEx, 'descend');
 [sortedCoefInc, indsInc] = sort(corrToViolentInc, 'descend');
 
@@ -57,6 +69,18 @@ else
     chosenFeaturesEx = sortedFeaturesExAbs(:,1:N);
     chosenFeaturesInc = sortedFeaturesIncAbs(:,1:N); 
 end
+
+%extract feature names to match with sorted correlations
+ExNames = sortedFeaturesEx.Properties.VariableNames;
+IncNames = sortedFeaturesInc.Properties.VariableNames;
+
+exNamesAndCorr = array2table(sortedCoefEx');
+incNamesAndCorr = array2table(sortedCoefInc');
+
+exNamesAndCorr.Properties.VariableNames = ExNames;
+incNamesAndCorr.Properties.VariableNames = IncNames;
+
+%do the same for absolute values
 
 %% Combine Chosen Features with crime data
 
@@ -98,17 +122,30 @@ randIndsAbsInc = randperm(size(recombAbsInc,1));
 
 randAbsEx = recombAbsEx(randIndsAbsEx,:);
 randAbsInc = recombAbsInc(randIndsAbsInc,:);
+% 
+% for N = 1:(size(randAbsEx, 2)-1)
+% %     size(randAbsEx(:,1:N))
+%     setExp = randAbsEx(:,[1:N,end]);
+%     setName = "featureRedProcessed/raceExcludedProcessedFeatures_" + num2str(N) + ".csv";
+%     writetable(setExp, setName);
+% end
+% 
+% for N = 1:(size(randAbsInc, 2)-1)
+% %     size(randAbsEx(:,1:N))
+%     setExp = randAbsInc(:,[1:N,end]);
+%     setName = "featureRedProcessed/raceIncludedProcessedFeatures_" + num2str(N) + ".csv";
+%     writetable(setExp, setName);
+% end
 
-for N = 1:(size(randAbsEx, 2)-1)
-%     size(randAbsEx(:,1:N))
-    setExp = randAbsEx(:,[1:N,end]);
-    setName = "featureRedProcessed/raceExcludedProcessedFeatures_" + num2str(N) + ".csv";
-    writetable(setExp, setName);
+%% Get priors
+
+priorsEx = zeros(1,11);
+priorsInc = zeros(1,11);
+
+for i = 1:size(randAbsEx,1)
+    priorsEx(randAbsEx{i,end}+1) = priorsEx(randAbsEx{i,end}+1) + 1;
+    priorsInc(randAbsInc{i,end}+1) = priorsInc(randAbsInc{i,end}+1) + 1;
 end
 
-for N = 1:(size(randAbsInc, 2)-1)
-%     size(randAbsEx(:,1:N))
-    setExp = randAbsInc(:,[1:N,end]);
-    setName = "featureRedProcessed/raceIncludedProcessedFeatures_" + num2str(N) + ".csv";
-    writetable(setExp, setName);
-end
+priorsExPerc = priorsEx / sum(priorsEx);
+priorsIncPerc = priorsInc / sum(priorsInc);
