@@ -137,20 +137,20 @@ randIndsAbsInc = randperm(size(recombAbsInc,1));
 
 randAbsEx = recombAbsEx(randIndsAbsEx,:);
 randAbsInc = recombAbsInc(randIndsAbsInc,:);
-% 
-% for N = 1:(size(randAbsEx, 2)-1)
-% %     size(randAbsEx(:,1:N))
-%     setExp = randAbsEx(:,[1:N,end]);
-%     setName = "featureRedProcessed/raceExcludedProcessedFeatures_" + num2str(N) + ".csv";
-%     writetable(setExp, setName);
-% end
-% 
-% for N = 1:(size(randAbsInc, 2)-1)
-% %     size(randAbsEx(:,1:N))
-%     setExp = randAbsInc(:,[1:N,end]);
-%     setName = "featureRedProcessed/raceIncludedProcessedFeatures_" + num2str(N) + ".csv";
-%     writetable(setExp, setName);
-% end
+
+for N = 1:(size(randAbsEx, 2)-1)
+%     size(randAbsEx(:,1:N))
+    setExp = randAbsEx(:,[1:N,end]);
+    setName = "featureRedProcessed/raceExcludedProcessedFeatures_" + num2str(N) + ".csv";
+    writetable(setExp, setName);
+end
+
+for N = 1:(size(randAbsInc, 2)-1)
+%     size(randAbsEx(:,1:N))
+    setExp = randAbsInc(:,[1:N,end]);
+    setName = "featureRedProcessed/raceIncludedProcessedFeatures_" + num2str(N) + ".csv";
+    writetable(setExp, setName);
+end
 
 %% Get priors
 
