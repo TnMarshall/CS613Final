@@ -9,6 +9,5 @@ Instructions for Obtaining Results Discussed in Paper:
 5a. featureRedOutput.txt should be split into accuraciesRaceDataEx.csv and accuraciesRaceDataInc.csv. This is accomplished by copying and pasting the data under the corresponding race included and excluded datasets into their respective files. Then, replace all appearances of "])," with a newline, remove all appearances of " ", "[", "]", "(", and ")". The files should now be in csv format. Add the first row "decision_tree,naive_bayes,KNN,logistic_regression,voting_ensamble" to the beginning of both files.  
 5b. Follow the same steps as 5a except copying the data from the terminal and into the respective csv files for bagging and boosting. (baggingAccuraciesEx.csv, baggingAccuraciesInc.csv, adaboostAccuraciesEx.csv, and adaboostAccuraciesInc.csv) The first row for these files will be "bagging" and "adaboost" respectively.  
 6. Run the matlab script combineBaggingAndRest.m. This script combines the CSV files into two CSV files, one for each dataset.  
-7. Run the matlab script accuracyGraphing.m. This script produces the final accuracies graphs which demonstrate the performance of the classifiers.    
-
-8. To obtain the confusion matrix disccused in the results section, run the logisticRegression.py file. The confusion matrix will be printed to the terminal where the axes and classes correspond to those in the paper.  
+7. Run the matlab script accuracyGraphing.m. This script produces the final accuracies graphs which demonstrate the performance of the classifiers.  
+8. To obtain the confusion matrix disccused in the results section, run the logisticRegression.py file. The confusion matrix will be printed to the terminal where the axes and classes correspond to those in the paper.
